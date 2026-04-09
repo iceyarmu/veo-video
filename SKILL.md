@@ -40,8 +40,7 @@ python3 ~/.openclaw/workspace/skills/veo-video/scripts/generate_video.py \
   --prompt "description" --filename "output.mp4" \
   [--reference_image path1 path2] [--reference_video path] \
   [--first_frame path] [--last_frame path] \
-  [--resolution 720p|1080p|4k] [--ratio 16:9|9:16] [--duration 5] \
-  [--person_generation allow_all|allow_adult|dont_allow]
+  [--resolution 720p|1080p|4k] [--ratio 16:9|9:16] [--duration 8]
 ```
 
 Always run from user's working directory, do NOT cd to skill directory.
@@ -68,8 +67,7 @@ Model is automatically chosen based on input mode and aspect ratio:
 | `--last_frame` | No | - | Last frame image (interpolation, use with first_frame) |
 | `--resolution` | No | 720p | 720p, 1080p, or 4k |
 | `--ratio` | No | 16:9 | 16:9 or 9:16 |
-| `--duration` | No | 5 | Duration in seconds (4, 5, 6, or 8) |
-| `--person_generation` | No | - | allow_all, allow_adult, or dont_allow |
+| `--duration` | No | 8 | Duration in seconds (4, 5, 6, or 8) |
 
 ## Constraints
 
@@ -86,12 +84,12 @@ Model is automatically chosen based on input mode and aspect ratio:
 # Text-to-video (landscape)
 python3 ~/.openclaw/workspace/skills/veo-video/scripts/generate_video.py \
   --prompt "A cat walking on a beach at sunset" \
-  --duration 5 --ratio 16:9 --filename output.mp4
+  --duration 8 --ratio 16:9 --filename output.mp4
 
 # Image-to-video with first frame
 python3 ~/.openclaw/workspace/skills/veo-video/scripts/generate_video.py \
   --prompt "The scene comes alive with gentle motion" \
-  --first_frame photo.jpg --duration 5 --filename output.mp4
+  --first_frame photo.jpg --duration 8 --filename output.mp4
 
 # Reference-image-to-video
 python3 ~/.openclaw/workspace/skills/veo-video/scripts/generate_video.py \

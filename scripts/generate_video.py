@@ -8,8 +8,7 @@ Usage:
     python3 generate_video.py --prompt "description" --filename "output.mp4" \
         [--reference_image path1 path2] [--reference_video path] \
         [--first_frame path] [--last_frame path] \
-        [--resolution 720p|1080p|4k] [--ratio 16:9|9:16] [--duration 5] \
-        [--person_generation allow_all|allow_adult|dont_allow]
+        [--resolution 720p|1080p|4k] [--ratio 16:9|9:16] [--duration 8]
 """
 
 import argparse
@@ -136,8 +135,6 @@ def build_request(args):
         "resolution": args.resolution,
         "numberOfVideos": 1,
     }
-    if args.person_generation:
-        parameters["personGeneration"] = args.person_generation
 
     return {"instances": [instance], "parameters": parameters}
 
@@ -248,10 +245,8 @@ def main():
                         help="Output resolution (default: 720p)")
     parser.add_argument("--ratio", choices=["16:9", "9:16"], default="16:9",
                         help="Aspect ratio (default: 16:9)")
-    parser.add_argument("--duration", default="5",
-                        help="Video duration in seconds: 4, 5, 6, 8 (default: 5)")
-    parser.add_argument("--person_generation", choices=["allow_all", "allow_adult", "dont_allow"],
-                        default=None, help="Person generation policy")
+    parser.add_argument("--duration", default="8",
+                        help="Video duration in seconds: 4, 5, 6, 8 (default: 8)")
     parser.add_argument("--filename", "-f", required=True, help="Output file path")
 
     args = parser.parse_args()
