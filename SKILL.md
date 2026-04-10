@@ -1,6 +1,6 @@
 ---
 name: veo-video
-description: Generate videos via Gemini Veo 3.1 API (generateContent endpoint). Supports text-to-video, image-to-video (first/last frame), and reference-image-to-video. Model auto-selected based on input mode and aspect ratio.
+description: Generate videos via Gemini Veo. Supports text-to-video, image-to-video (first/last frame), and reference-image-to-video with aspect ratio control.
 metadata:
   openclaw:
     emoji: "\U0001F3AC"
@@ -13,10 +13,6 @@ metadata:
       GEMINI_API_KEY:
         required: true
         description: Gemini API Key
-        howToGet: |
-          1. Visit https://aistudio.google.com/apikey
-          2. Create an API Key
-        url: https://aistudio.google.com/apikey
       GEMINI_BASE_URL:
         required: true
         description: Gemini API Base URL
@@ -24,7 +20,7 @@ metadata:
 
 # Veo Video
 
-Generate videos using the Gemini Veo 3.1 API (generateContent endpoint).
+Generate videos using Gemini Veo.
 
 ## Configuration
 
@@ -45,47 +41,24 @@ python3 ~/.openclaw/workspace/skills/veo-video/scripts/generate_video.py \
 
 Always run from user's working directory, do NOT cd to skill directory.
 
-## Model Auto-Selection
-
-Model is automatically chosen based on input mode and aspect ratio:
-
-| Mode | Trigger | Model |
-|------|---------|-------|
-| t2v (text-to-video) | No image inputs | `veo_3_1_t2v_fast_landscape` (16:9) / `veo_3_1_t2v_fast_portrait` (9:16) |
-| i2v (image-to-video) | `--first_frame` or `--last_frame` | `veo_3_1_i2v_s_fast_fl` |
-| r2v (reference-to-video) | `--reference_image` | `veo_3_1_r2v_fast` |
-
-## API Format
-
-Uses the `generateContent` endpoint:
-
-```
-POST {GEMINI_BASE_URL}/v1beta/models/{model}:generateContent
-```
-
-Request body uses `contents` with `parts`:
-- Text prompt as `{"text": "..."}` part
-- Local images as `{"inlineData": {"mimeType": "...", "data": "base64..."}}` part
-- URL images as `{"fileData": {"mimeType": "...", "fileUri": "https://..."}}` part
-
 ## Parameters
 
 | Parameter | Required | Default | Description |
 |-----------|----------|---------|-------------|
 | `--prompt` | Yes | - | Video description prompt |
 | `--filename` | Yes | - | Output file path (.mp4) |
-| `--reference_image` | No | - | Reference image path(s)/URL(s), up to 3 (triggers r2v) |
-| `--first_frame` | No | - | First frame image (triggers i2v mode) |
-| `--last_frame` | No | - | Last frame image (use with first_frame for interpolation) |
-| `--ratio` | No | 16:9 | 16:9 or 9:16 |
+| `--reference_image` | No | - | Reference image path(s) or URL(s), up to 3 |
+| `--first_frame` | No | - | First frame image path or URL |
+| `--last_frame` | No | - | Last frame image path or URL (use with `--first_frame` for interpolation) |
+| `--ratio` | No | 16:9 | `16:9` or `9:16` |
+
+Image arguments accept either a local file path or an `http(s)://` URL.
 
 ## Constraints
 
-- **Aspect ratio**: Only 16:9 (landscape) and 9:16 (portrait)
-- **Reference images**: Up to 3 images
-- **I2V frame order**: First frame must come before last frame (order is fixed)
-- **Audio**: Veo 3.x generates audio natively
-- **Local files**: Auto base64-encoded as inlineData. URLs passed as fileData (no download).
+- **Aspect ratio**: only `16:9` (landscape) and `9:16` (portrait)
+- **Reference images**: up to 3 images
+- **Frame order**: `--first_frame` must be provided before (or together with) `--last_frame`; do not pass `--last_frame` alone
 
 ## Examples
 

@@ -21,12 +21,12 @@ from pathlib import Path
 import requests
 
 MODELS = {
-    ("t2v", "16:9"): "veo_3_1_t2v_fast_landscape",
-    ("t2v", "9:16"): "veo_3_1_t2v_fast_portrait",
-    ("i2v", "16:9"): "veo_3_1_i2v_s_fast_fl",
-    ("i2v", "9:16"): "veo_3_1_i2v_s_fast_fl",
-    ("r2v", "16:9"): "veo_3_1_r2v_fast",
-    ("r2v", "9:16"): "veo_3_1_r2v_fast",
+    ("t2v", "16:9"): "veo_3_1_t2v_fast_ultra_relaxed",
+    ("t2v", "9:16"): "veo_3_1_t2v_fast_portrait_ultra_relaxed",
+    ("i2v", "16:9"): "veo_3_1_i2v_s_fast_ultra_relaxed",
+    ("i2v", "9:16"): "veo_3_1_i2v_s_fast_portrait_ultra_relaxed",
+    ("r2v", "16:9"): "veo_3_1_r2v_fast_ultra_relaxed",
+    ("r2v", "9:16"): "veo_3_1_r2v_fast_portrait_ultra_relaxed",
 }
 
 SUPPORTED_IMAGE_EXTS = {".jpeg", ".jpg", ".png", ".webp", ".bmp", ".tiff", ".tif", ".gif"}
