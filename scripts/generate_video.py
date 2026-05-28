@@ -23,7 +23,10 @@ from urllib.parse import urlparse
 import requests
 
 DEFAULT_MODEL = "veo-3-1"
-REQUEST_DURATION = 8
+DEFAULT_REQUEST_DURATION = 8
+MODEL_REQUEST_DURATIONS = {
+    "veo-omni-flash": 10,
+}
 POLL_INTERVAL = 10
 TIMEOUT = 1800
 
@@ -77,6 +80,10 @@ def validate_args(args):
     return mode
 
 
+def request_duration_for_model(model):
+    return MODEL_REQUEST_DURATIONS.get(model, DEFAULT_REQUEST_DURATION)
+
+
 def infer_image_mime_type(path_or_url, fallback="image/png"):
     parsed = urlparse(path_or_url)
     path = parsed.path if parsed.scheme else path_or_url
@@ -127,7 +134,7 @@ def build_request(args, model):
         "model": model,
         "prompt": args.prompt,
         "aspect_ratio": args.ratio,
-        "duration": REQUEST_DURATION,
+        "duration": request_duration_for_model(model),
     }
 
     if args.first_frame:
